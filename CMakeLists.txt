@@ -25,8 +25,8 @@ endif()
 
 add_library(${PROJECT_NAME}
   src/asserts.cpp
-  src/filesystem_helper.cpp
-  src/find_library.cpp
+  #src/filesystem_helper.cpp
+  #src/find_library.cpp
   src/env.cpp
   src/shared_library.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -91,13 +91,6 @@ if(BUILD_TESTING)
   ament_add_gtest(test_split test/test_split.cpp)
   target_link_libraries(test_split ${PROJECT_NAME})
 
-  ament_add_gtest(test_filesystem_helper test/test_filesystem_helper.cpp
-    ENV
-      EXPECTED_WORKING_DIRECTORY=$<SHELL_PATH:${CMAKE_CURRENT_BINARY_DIR}>
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-  ament_target_dependencies(test_filesystem_helper rcutils)
-  target_link_libraries(test_filesystem_helper ${PROJECT_NAME})
-
   ament_add_gtest(test_find_and_replace test/test_find_and_replace.cpp)
   target_link_libraries(test_find_and_replace ${PROJECT_NAME})
 
@@ -129,11 +122,6 @@ if(BUILD_TESTING)
 
   add_library(test_library SHARED test/test_library.cpp)
   target_link_libraries(test_library PUBLIC ${PROJECT_NAME})
-  ament_add_gtest(test_find_library test/test_find_library.cpp)
-  target_link_libraries(test_find_library test_library)
-  set_tests_properties(test_find_library PROPERTIES
-    ENVIRONMENT
-      "_TEST_LIBRARY_DIR=$<TARGET_FILE_DIR:test_library>;_TEST_LIBRARY=$<TARGET_FILE:test_library>")
 
   ament_add_gtest(test_clamp test/test_clamp.cpp)
   target_link_libraries(test_clamp ${PROJECT_NAME})
