@@ -432,6 +432,7 @@ bool remove_all(const path & p)
 
   return 0 == ret && false == file_options.fAnyOperationsAborted;
 #else
+  /*
   DIR * dir = opendir(p.string().c_str());
   struct dirent * directory_entry;
   while ((directory_entry = readdir(dir)) != nullptr) {
@@ -448,6 +449,7 @@ bool remove_all(const path & p)
     }
   }
   closedir(dir);
+  */
   // directory is empty now, call remove
   rcpputils::fs::remove(p);
   return !rcpputils::fs::exists(p);
